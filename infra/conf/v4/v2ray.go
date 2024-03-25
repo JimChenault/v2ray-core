@@ -320,6 +320,7 @@ type Config struct {
 	Observatory      *ObservatoryConfig      `json:"observatory"`
 	BurstObservatory *BurstObservatoryConfig `json:"burstObservatory"`
 	MultiObservatory *MultiObservatoryConfig `json:"multiObservatory"`
+	Persist          *PersistConfig          `json:"persist"`
 
 	Services map[string]*json.RawMessage `json:"services"`
 }
@@ -437,6 +438,14 @@ func (c *Config) Build() (*core.Config, error) {
 			return nil, err
 		}
 		config.App = append(config.App, serial.ToTypedMessage(pc))
+	}
+
+	if c.Persist != nil {
+		pp, err := c.Persist.Build()
+		if err != nil {
+			return nil, err
+		}
+		config.App = append(config.App, serial.ToTypedMessage(pp))
 	}
 
 	if c.Reverse != nil {

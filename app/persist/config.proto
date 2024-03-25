@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package v2ray.core.app.persist;
+option csharp_namespace = "V2Ray.Core.App.Persist";
+option go_package = "github.com/v2fly/v2ray-core/v5/app/persist";
+option java_package = "com.v2ray.core.app.persist";
+option java_multiple_files = true;
+
+import "common/protoext/extensions.proto";
+
+message DBconfig {
+    string type = 1;
+    string path = 2;
+    string uname = 3;
+    string passwd = 4;
+    string dbname = 5;
+}
+
+message Config {
+    option (v2ray.core.common.protoext.message_opt).type = "service";
+    option (v2ray.core.common.protoext.message_opt).short_name = "persist";
+
+    DBconfig database = 1;
+    bool enable = 2;
+}
